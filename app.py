@@ -36,7 +36,7 @@ def get_data():
 df = get_data()
 
 # --- HEADER ---
-st.image("https://img.freepik.com/free-vector/coffee-production-concept-illustration_114360-6395.jpg?w=826", width=150)
+st.image("https://cdn-icons-png.flaticon.com/512/2935/2935308.png", width=150)
 st.title("🛡️ Quality Traceability")
 st.caption("AntiInflam Coffee NanoCaps™")
 
@@ -104,3 +104,4 @@ else:
         if input_manual:
             st.query_params["batch"] = input_manual
             st.rerun()
+
