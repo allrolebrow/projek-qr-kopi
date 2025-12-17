@@ -8,7 +8,7 @@ st.set_page_config(
     page_title="Traceability: AntiInflam Coffee",
     page_icon="☕",
     layout="centered",
-    initial_sidebar_state="collapsed" # Sidebar tertutup otomatis biar bersih
+    initial_sidebar_state="collapsed"
 )
 
 # --- CSS BIAR CANTIK ---
@@ -16,8 +16,22 @@ st.markdown("""
     <style>
     .stApp {background-color: #fcfcfc;}
     .success-box {
-        padding: 20px; background-color: #d4edda; color: #155724;
-        border-radius: 12px; border: 1px solid #c3e6cb; margin-bottom: 20px;
+        padding: 20px; 
+        background-color: #d4edda; 
+        color: #155724;
+        border-radius: 12px; 
+        border: 1px solid #c3e6cb; 
+        margin-bottom: 20px;
+    }
+    .qc-badge {
+        background-color: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 14px;
+        display: inline-block;
+        margin-top: 5px;
     }
     .metric-card {
         background-color: white; padding: 15px; border-radius: 10px;
@@ -36,7 +50,7 @@ def get_data():
 df = get_data()
 
 # --- HEADER ---
-st.image("https://cdn-icons-png.flaticon.com/512/2935/2935308.png", width=150)
+st.image("https://cdn-icons-png.flaticon.com/512/2935/2935308.png", width=120)
 st.title("🛡️ Quality Traceability")
 st.caption("AntiInflam Coffee NanoCaps™")
 
@@ -44,7 +58,6 @@ st.caption("AntiInflam Coffee NanoCaps™")
 query_params = st.query_params
 batch_url = query_params.get("batch", None)
 
-# Jika discan (ada parameter batch), langsung tampilkan data
 if batch_url:
     hasil = df[df['Batch_ID'] == batch_url]
     
@@ -55,11 +68,17 @@ if batch_url:
         with st.spinner('Memverifikasi Blockchain & Data Lab...'):
             time.sleep(1.0)
             
-        # 1. Status Validasi
+        # --- UPDATE DISINI: MENAMPILKAN STATUS QC ---
+        # Cek apakah kolom Status_QC ada di database, jika tidak default 'LULUS'
+        status_qc = data.get('Status_QC', 'LULUS UJI') 
+        
+        # Logika Tampilan Status
         st.markdown(f"""
         <div class="success-box">
             <h3>✅ BATCH TERVERIFIKASI</h3>
             <b>ID: {data['Batch_ID']}</b><br>
+            <span class="qc-badge">STATUS QC: {status_qc}</span><br>
+            <br>
             Produk Asli & Aman Dikonsumsi.<br>
             <i>Tanggal Produksi: {data['Tanggal_Produksi']}</i>
         </div>
@@ -93,15 +112,13 @@ if batch_url:
     else:
         st.error("❌ Batch ID tidak dikenali. Produk mungkin palsu atau kode salah.")
 
-# Jika dibuka tanpa scan (Tampilan Awal)
+# Tampilan Awal (Belum Scan)
 else:
     st.info("👋 Selamat Datang! Silakan Scan QR Code yang ada di kemasan produk untuk melihat data mutu.")
     st.markdown("---")
     
-    # Input Manual
     input_manual = st.text_input("Atau masukkan Kode Batch manual:", placeholder="Contoh: NANO-001")
     if st.button("Cek Mutu"):
         if input_manual:
             st.query_params["batch"] = input_manual
             st.rerun()
-
