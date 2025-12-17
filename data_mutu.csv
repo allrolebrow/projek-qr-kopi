@@ -1,0 +1,4 @@
+Batch_ID,Tanggal_Produksi,Sumber_Kopi,Varietas_Rempah,Ukuran_Partikel_nm,Total_Fenolik,Aktivitas_Anti_Inflamasi,Status_QC
+NANO-001,10 Jan 2025,Luwak Liar (Gayo Highlands),Jahe Merah + Temulawak,145.2,48.5,88.5,LULUS UJI
+NANO-002,12 Jan 2025,Luwak Liar (Ijen Crater),Kunyit + Kayu Manis,132.8,52.1,91.2,LULUS UJI
+NANO-003,15 Feb 2025,Luwak Liar (Toraja),Jahe Emprit + Kencur,150.5,49.3,89.0,LULUS UJI
